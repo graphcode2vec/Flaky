@@ -17,9 +17,9 @@ class PredictionLinearFlakyModelFineTune( nn.Module ):
         #batch.x, batch.edge_index, batch.edge_attr, batch.batch, batch.ins_length
         x_s, _, _ = self.encoder.getVector(batch)   
      #   torch.subtract(x1-x2)
-       # x = self.dropout(x_s)
+        x = self.dropout(x_s)
         x = self.dense(x_s)
-        x = torch.relu(x)
+        x = torch.tanh(x)
         x = self.dropout(x)
         return  self.softmax(self.out_proj(x))
     

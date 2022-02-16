@@ -16,8 +16,18 @@ conda activate graph
 device=0
 num_class=2
 i=1
-output_folder=results/flaky${num_class}/context_${i}
-bash patch_prediction.sh gat "pretrained_models/context/gat/model_0" ${output_folder}/ attention $device $num_class
+for d in 0.1 0.15 0.2 0.3
+do
+for b in 256 512 1024
+do
+for w in yes no
+do
+output_folder=results/flaky${num_class}_${w}_${d}_${b}/context
+bash patch_prediction.sh gat "pretrained_models/context/gat/model_0" ${output_folder}/ attention $device $num_class $d $b $w
+done
+done
+done
+
 
 # output_folder=results/flaky${num_class}/context_${i}
 # bash patch_prediction.sh gcn "pretrained_models/context/gcn/model_0" ${output_folder}/ attention $device $num_class

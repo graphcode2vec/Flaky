@@ -5,6 +5,9 @@ output_prefix=$3
 gp=$4
 device=$5
 num_class=$6
+d=$7
+b=$8
+w=$9
 cd ../
 
 output=${output_prefix}/${gnn_type}
@@ -12,7 +15,7 @@ sw=lstm
 jk=sum
 lstm_emb_dim=150
 #mkdir -p $output
-python flaky_prediction.py --batch_size 256 --num_workers 5  --epochs 100 --num_layer 5 \
+python flaky_prediction.py --batch_size $b --num_workers 5  --epochs 100 --num_layer 5 \
 --subword_embedding  $sw \
 --lstm_emb_dim $lstm_emb_dim \
 --graph_pooling $gp \
@@ -27,10 +30,11 @@ python flaky_prediction.py --batch_size 256 --num_workers 5  --epochs 100 --num_
 --device ${device} \
 --num_class ${num_class} \
 --lr 0.001 \
---dropratio 0.1 \
+--dropratio $d \
 --warmup_schedule yes \
 --mutant_type no \
 --lazy yes \
+--weight $w
 --grid_search no
 
 

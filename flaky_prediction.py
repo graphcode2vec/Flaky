@@ -177,8 +177,9 @@ def train_mode(args):
     TNt, FPt, FNt, TPt = 0,0,0,0
     cc = 0
     for fold, (train_ids, test_ids) in enumerate(kfold.split(dataset)):
-        # if cc < 3:
-        #     cc = cc + 1
+        if cc < 1:
+             cc = cc + 1
+             continue
         best_f1 = 0
         view_test_f1 = 0
 
@@ -224,9 +225,12 @@ def train_mode(args):
          # push to GPU
           # converting list of class weights to a tensor
         weights = torch.tensor(class_weights, dtype=torch.float)
+        print(weights)
         weights = weights.to(device)
-        #criterion = nn.NLLLoss(weight=weights)
-        criterion = nn.NLLLoss()
+        if args.weight == "yes":
+           criterion = nn.NLLLoss(weight=weights)
+        else:
+           criterion = nn.NLLLoss()
 
         random.shuffle(train_ids)       
         inner_split_point = int(0.8*len(train_ids))
@@ -282,7 +286,7 @@ def train_mode(args):
     accuracy, F1, Precision, Recall = get_evaluation_scores(TNt, FPt, FNt, TPt)
     result = pd.DataFrame(columns = ['Accuracy','F1', 'Precision', 'Recall', 'TN', 'FP', 'FN', 'TP'])
     result = result.append(pd.Series([accuracy, F1, Precision, Recall, TNt, FPt, FNt, TPt], index=result.columns), ignore_index=True)
-    result.to_csv( "Flakify_results.csv",  index=False)
+    result.to_csv( f"{orgsavedpath}/Flakify_results.csv",  index=False)
 
 def get_evaluation_scores(tn, fp, fn, tp):
     print("get_score method is defined")
@@ -357,6 +361,7 @@ def main():
                         help='mutantype')
     parser.add_argument('--lazy', type=str, default="no",
                         help='save model')
+    parser.add_argument('--weight', type=str, default="no", help="weighted loss")
     parser.add_argument('--grid_search', type=str, default="no",
                         help='grid_search')
     
