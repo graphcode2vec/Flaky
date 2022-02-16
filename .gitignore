@@ -1,0 +1,12 @@
+results/
+pretrained_models/
+data/
+graphs/
+projects/
+tokens/
+test_class/
+GraphExtrctor/demo/
+GraphExtrctor/example/
+GraphExtrctor/target/
+GraphExtrctor/test/
+

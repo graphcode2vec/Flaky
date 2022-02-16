@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["--batch_size", "128", "--num_workers", "5",  "--epochs", "50", "--num_layer", "5",
+                "--subword_embedding", "lstm",
+                "--lstm_emb_dim", "150",
+                "--graph_pooling", "attention",
+                "--JK", "sum",
+                "--saved_model_path", "tmp/",
+                "--log_file", "tmp/log.txt",
+                "--gnn_type", "gat" ,
+                "--sub_token_path", "./tokens/jars",
+                "--emb_file", "emb_100.txt", 
+                "--dataset", "DV_PDG", 
+                "--input_model_file", "pretrained_models/context/gat/model_0",
+                "--device", "0",
+                "--num_class", "2",
+                "--lr", "0.001", 
+                "--dropratio", "0.1", 
+                "--warmup_schedule", "yes" ,
+                "--mutant_type", "yes" ,
+                "--grid_search" ,"no"]
+        }
+    ]
+}
