@@ -177,9 +177,11 @@ def train_mode(args):
     TNt, FPt, FNt, TPt = 0,0,0,0
     cc = 0
     for fold, (train_ids, test_ids) in enumerate(kfold.split(dataset)):
-        if cc < 1:
-             cc = cc + 1
-             continue
+        gc.collect()
+        torch.cuda.empty_cache()
+        #if cc < 1:
+        #     cc = cc + 1
+        #     continue
         best_f1 = 0
         view_test_f1 = 0
 
