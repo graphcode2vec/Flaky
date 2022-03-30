@@ -23,7 +23,7 @@ do
 for w in yes no
 do
 output_folder=results/flaky${num_class}_${w}_${d}_${b}/context
-bash patch_prediction.sh gat "pretrained_models/context/gat/model_0" ${output_folder}/ attention $device $num_class $d $b $w
+bash flaky_prediction.sh gat "pretrained_models/context/gat/model_0" ${output_folder}/ attention $device $num_class $d $b $w
 done
 done
 done
