@@ -169,7 +169,7 @@ def train_mode(args):
     # Define the K-fold Cross Validator
     # Configuration options
     k_folds = 10
-    kfold = KFold(n_splits=k_folds, shuffle=True, random_state=488)
+    kfold = KFold(n_splits=k_folds, shuffle=True, random_state=0)
     # K-fold Cross Validation model evaluation
     orgsavedpath=args.saved_model_path
     global best_f1
@@ -283,12 +283,15 @@ def train_mode(args):
         f1.close()
         del model
         del encoder
+        gc.collect()
+        torch.cuda.empty_cache()
         TNt, FPt, FNt, TPt = TNt+TN, FPt+FP, FNt+FN, TPt+TP 
         
     accuracy, F1, Precision, Recall = get_evaluation_scores(TNt, FPt, FNt, TPt)
     result = pd.DataFrame(columns = ['Accuracy','F1', 'Precision', 'Recall', 'TN', 'FP', 'FN', 'TP'])
     result = result.append(pd.Series([accuracy, F1, Precision, Recall, TNt, FPt, FNt, TPt], index=result.columns), ignore_index=True)
-    result.to_csv( f"{orgsavedpath}/Flakify_results.csv",  index=False)
+    
+    result.to_csv( f"{os.path.dirname(orgsavedpath)}/Flakify_results.csv",  index=False)
 
 def get_evaluation_scores(tn, fp, fn, tp):
     print("get_score method is defined")
