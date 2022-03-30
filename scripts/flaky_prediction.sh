@@ -15,7 +15,7 @@ sw=lstm
 jk=sum
 lstm_emb_dim=150
 #mkdir -p $output
-python flaky_prediction.py --batch_size $b --num_workers 5  --epochs 100 --num_layer 5 \
+python flaky_prediction.py --batch_size $b --num_workers 5  --epochs 50 --num_layer 5 \
 --subword_embedding  $sw \
 --lstm_emb_dim $lstm_emb_dim \
 --graph_pooling $gp \
